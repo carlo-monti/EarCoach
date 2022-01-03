@@ -100,4 +100,7 @@ class Parameter implements ExerciseParameter{
 }
 ```
 
-After the class has been created 
+After the class has been created, a new value for the enum ExerciseType must be created. It must contain the class name with reference to the package (String) and the name you want the exercise to be called (String).
+```
+INTERVALS("org.vosk.earcoach.NewExercise","Exercise Name"),
+```
