@@ -19,7 +19,7 @@ The app is built in such a way that it can be extended with new exercises by sim
 Every exercise can have multiple parameters. Every parameter is represented by a new Class that must implement the ExerciseParameter interface. Every parameter can have multiple values (i.e. the parameter "instrument" can have values such as "piano", "guitar", ...) and every value must have a String that represent it. 
 
 A parameter value can be saved to permanent storage (with SharedPreferences). This is automatically done and to retrieve the stored value the parameter class must have a constructor that takes the reference to the Exercise and call the method exercise.getStoredValueForParameter(this) passing itself as argument. A new exercise looks like this:
-
+```
 public class NewExercise extends Exercise{
 
     Parameter parameter = new Parameter(this);
@@ -97,3 +97,4 @@ class Parameter implements ExerciseParameter{
         return currentValue;
     }
 }
+```
