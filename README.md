@@ -18,7 +18,7 @@ The app is implemented as a fsm with four states: HOME, EXERCISE, SETTINGS, PARA
 ## Create a new exercise
 The app is built in such a way that it can be extended with new exercises by simply adding a new class that extends the Exercise abstract class. The new class must override some methods. Every exercise works by asking a question and checking an answer. To interact with the user the exercise can call the methods speak() and play(). The first takes a String as an argument and the second takes an array (of array) in which every item represents the MIDI notes that must be executed at the same moment (i.e. {{60},{},{50,55}} is a sequence of a single note [60], followed by a pause, followed by a chord composed of two notes [50,55]). 
 
-Every exercise can have multiple parameters. Every parameter is represented by a new Class that must implement the ExerciseParameter interface. Every parameter can have multiple values (i.e. the parameter "instrument" can have values such as "piano", "guitar", ...) and every value must have a String that represent it. 
+Every exercise can have multiple parameters. Every parameter is represented by a new Class that must implement the ExerciseParameter interface. Every parameter can have multiple values (i.e. the parameter "instrument" can have values such as "piano", "guitar", ...) and every value must have a String that represents it allowing the user to select it by voice. 
 
 A parameter value can be saved to permanent storage (with SharedPreferences). This is automatically done and to retrieve the stored value the parameter class must have a constructor that takes the reference to the Exercise and call the method exercise.getStoredValueForParameter(this) passing itself as argument. A new exercise looks like this:
 
@@ -102,8 +102,14 @@ class Parameter implements ExerciseParameter{
 }
 ```
 
+
+
 After the class has been created, a new value for the enum ExerciseType must be created. It must contain the class name with reference to the package (String) and the name you want the exercise to be called (String).
 
 ```java
-NEW_EXERCISE("org.vosk.earcoach.NewExercise","Exercise Name"),
+public enum ExerciseType {
+    INTERVALS("org.vosk.earcoach.Interval",Words.INTERVALS),
+    MELODY("org.vosk.earcoach.Melody",Words.MELODY);
+    // Insert here the new exercise class
+}
 ```
