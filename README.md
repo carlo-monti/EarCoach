@@ -25,7 +25,11 @@ The app is built in such a way that it can be extended with new exercises by sim
 - **tellExerciseInstructions**: tells the user about how the exercise works
 - **getPossibleAnswers**: returns the accepted answers (i.e. "major second", "major third", etc.)
 
-To interact with the user the exercise can call the methods speak() and play(). The first takes a String as an argument and the second takes an array (of array) in which every item represents the MIDI notes that must be executed at the same moment (i.e. {{60},{},{50,55}} is a sequence of a single note [60], followed by a pause, followed by a chord composed of two notes [50,55]).
+To interact with the user the exercise can call the methods speak() and play(). The first takes a String as an argument and the second takes an array (of array) in which every item represents the MIDI notes that must be executed at the same moment. For example, the structure:
+```java
+{{60},{},{50,55}}
+```
+is a sequence of a single note (60), followed by a pause, followed by a chord composed of two notes (50,55).
 
 Every exercise can have multiple parameters. Every parameter is represented by a new Class that must implement the ExerciseParameter interface. Every parameter can have multiple values (i.e. the parameter "instrument" can have values such as "piano", "guitar", ...) and every value must have a String that represents it allowing the user to select it by voice. There are two "built-in" parameters that are available for every exercise: "Instrument" and "Speed".
 
