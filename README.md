@@ -11,16 +11,33 @@ The app code is structured as follows:
 - **Synth**: handles the musical playing part of the job. It uses the MidiDriver library that simply send MIDI commands to the android internal general midi synth.
 - **Vosk**: handles the speech-to-text job. It uses the Vosk library and it has been modified to accept only some words that are set with the setAcceptedKeywords() method.
 
-Given that the app is doing only one of these three actions at the same moment, every action is executed on a new thread. Whenever one action is called, it takes a lock and the current thread is forced to wait on the same lock. In this way the code can be written sequentially (i.e. speak(); play(); speak(); listen(); ...) having the following instruction waiting on the lock for the completion of the previous. Teacher implements three listener interfaces, one for every action and whenever an action is completed, a callback function is executed freeing the lock.
+Given that the app is doing only one of these three actions at the same moment, every action is executed on a new thread. Whenever one action is called, it takes a lock and the current thread is forced to wait on the same lock. In this way the code can be written sequentially (i.e. speak(); play(); speak(); listen(); ...) having the following instruction waiting on the lock for the completion of the previous. Teacher implements three listener interfaces, one for every action and whenever an action is completed, a callback function is executed leaving the lock.
 
-The app is implemented as a fsm with four states: HOME, EXERCISE, SETTINGS, PARAMETER (states are represented with the Fsm enum). At every cycle the Teacher evaluates the keyword that has been received as input using the method updateFSM(). This method calls the execute() method on the current state of the fsm and it receives the new state and a list of available keywords. After that the app start listening for the given keywords and so on...
+The app is implemented as a fsm with four states: HOME, EXERCISE, SETTINGS, PARAMETER and the states are represented with the Fsm enum. At every cycle the Teacher evaluates the keyword that has been received as input using the method updateFSM(). This method calls the execute() method on the current state of the fsm and it receives the new state and a list of available keywords. After that the app start listening for the given keywords and so on...
 
 ## Create a new exercise
-The app is built in such a way that it can be extended with new exercises by simply adding a new class that extends the Exercise abstract class. The new class must override some methods. Every exercise works by asking a question and checking an answer. To interact with the user the exercise can call the methods speak() and play(). The first takes a String as an argument and the second takes an array (of array) in which every item represents the MIDI notes that must be executed at the same moment (i.e. {{60},{},{50,55}} is a sequence of a single note [60], followed by a pause, followed by a chord composed of two notes [50,55]). 
+The app is built in such a way that it can be extended with new exercises by simply adding a new class that extends the Exercise abstract class. Every exercise works by asking a question and checking an answer. The new class must override some methods:
 
-Every exercise can have multiple parameters. Every parameter is represented by a new Class that must implement the ExerciseParameter interface. Every parameter can have multiple values (i.e. the parameter "instrument" can have values such as "piano", "guitar", ...) and every value must have a String that represents it allowing the user to select it by voice. 
+- getNewQuestion: creates a new question inside the exercise
+- askCurrentQuestion: ask the question to the user speaking and playing something
+- tellAnswer: reveal to the user the correct answer
+- checkThisAnswer: checks whether the received answer is correct and tells it to the user
+- tellExerciseInstructions: tells the user about how the exercise works
+- getPossibleAnswers: returns the accepted answers (i.e. "major second", "major third", etc.)
 
-A parameter value can be saved to permanent storage (with SharedPreferences). This is automatically done and to retrieve the stored value the parameter class must have a constructor that takes the reference to the Exercise and call the method exercise.getStoredValueForParameter(this) passing itself as argument. A new exercise looks like this:
+To interact with the user the exercise can call the methods speak() and play(). The first takes a String as an argument and the second takes an array (of array) in which every item represents the MIDI notes that must be executed at the same moment (i.e. {{60},{},{50,55}} is a sequence of a single note [60], followed by a pause, followed by a chord composed of two notes [50,55]).
+
+
+
+Every exercise can have multiple parameters. Every parameter is represented by a new Class that must implement the ExerciseParameter interface. Every parameter can have multiple values (i.e. the parameter "instrument" can have values such as "piano", "guitar", ...) and every value must have a String that represents it allowing the user to select it by voice. There are two "built-in" parameters that are available for every exercise: "Instrument" and "Speed".
+
+Inside the parameter class you can handle the values in every way. I found it useful to use a LinkedHashMap to convert the String to the value needed (i.e. String "ONE" to Int value) and a Pair to store the current value (i.e. as a pair of String and Int value).
+
+A parameter value can be saved to permanent storage (with SharedPreferences). This is automatically done. To retrieve the stored value, the parameter class must have a constructor that takes a reference to the Exercise owner and call the method owner.getStoredValueForParameter(this) passing itself as argument. 
+
+
+
+A new exercise looks like this:
 
 ```java
 public class NewExercise extends Exercise{
@@ -70,7 +87,7 @@ public class NewExercise extends Exercise{
 
 class Parameter implements ExerciseParameter{
 
-	String currentValue; // can be anything, not only a String
+    String currentValue; // can be anything, not only a String
 
     public Parameter(Exercise owner){
         String storedCurrentValue = owner.getStoredValueForParameter(this);
