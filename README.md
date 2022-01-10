@@ -133,3 +133,13 @@ public enum ExerciseType {
     // Insert the new exercise class here
 }
 ```
+
+## Locale
+Every accepted word is taken by the string.xml file, so the app can be localizable with ease. To make the access faster, every string is converted to a static string variable within the Words object with a method (generateStaticVariablesFromResources) that is called at runtime every time the app is launched. To insert a new string:
+- Insert the string into string.xml
+- Create a constant into Words
+- Instantiate the variable with the value taken from string.xml with context.getString().
+- From the code call Words.NEW_STRING
+
+
+This obj can be used also to retrieve the string at runtime using the static method get() with the reference (R.string.DESIDERED_STRING) as parameter.
