@@ -1,7 +1,7 @@
 ## EarCoach
 Voice based ear-training app for Android
 
-**EarCoach** is an ear-training app that can be used without the need to touch the screen: it works just with voice commands. With your voice you can choose between different exercises, answer to the questions and even set some parameters. The app has a hierarchical structure that you can navigate with your commands. Basically you can select an exercise (i.e. "intervals") and than you can start the exercise or set some parameters (i.e. "speed","instrument",...). At every point you can say "info" to have informations about your position and what can you do or where you can move. 
+**EarCoach** is an ear-training app that can be used without the need to touch the screen: it works just with voice commands. With your voice you can choose between different exercises, answer to the questions and even edit some settings. The app has a hierarchical structure that you can navigate with your commands. Basically you can select an exercise (i.e. "intervals") and then you can start the exercise or set some parameters (i.e. "speed","instrument",...). At every point you can say "info" to have informations about your position and what can you do or where you can move.
 
 ## Documentation
 The app code is structured as follows:
@@ -26,10 +26,13 @@ The app is built in such a way that it can be extended with new exercises by sim
 - **getPossibleAnswers**: returns the accepted answers (i.e. "major second", "major third", etc.)
 
 To interact with the user the exercise can call the methods speak() and play(). The first takes a String as an argument and the second takes an array (of array) in which every item represents the MIDI notes that must be executed at the same moment. For example, the structure:
+
 ```java
 {{60},{},{50,55}}
 ```
 is a sequence of a single note (60), followed by a pause, followed by a chord composed of two notes (50,55).
+
+# Parameters
 
 Every exercise can have multiple parameters. Every parameter is represented by a new Class that must implement the ExerciseParameter interface. Every parameter can have multiple values (i.e. the parameter "instrument" can have values such as "piano", "guitar", ...) and every value must have a String that represents it allowing the user to select it by voice. There are two "built-in" parameters that are available for every exercise: "Instrument" and "Speed".
 
@@ -37,7 +40,7 @@ Inside the parameter class you can handle the values anyway you like it. I found
 
 A parameter value can be saved to permanent storage (with SharedPreferences). This is automatically done. To retrieve the stored value, the parameter class must have a constructor that takes a reference to the Exercise owner and call the method owner.getStoredValueForParameter(this) passing itself as argument. 
 
-
+A parameter Class must be added to the exercise class with the method addParameter().
 
 A new exercise looks like this:
 
@@ -121,14 +124,12 @@ class Parameter implements ExerciseParameter{
 }
 ```
 
-
-
-After the class has been created, a new value for the enum ExerciseType must be created. It must contain the class name with reference to the package (String) and the name you want the exercise to be called (String).
+After the class has been created, a new value for the enum ExerciseType must be added. It must contain the class name with reference to the package (String) and the name you want the exercise to be called (String).
 
 ```java
 public enum ExerciseType {
     INTERVALS("org.vosk.earcoach.Interval",Words.INTERVALS),
     MELODY("org.vosk.earcoach.Melody",Words.MELODY);
-    // Insert here the new exercise class
+    // Insert the new exercise class here
 }
 ```
