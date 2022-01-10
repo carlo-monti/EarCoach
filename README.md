@@ -33,7 +33,7 @@ is a sequence of a single note (60), followed by a pause, followed by a chord co
 
 Every exercise can have multiple parameters. Every parameter is represented by a new Class that must implement the ExerciseParameter interface. Every parameter can have multiple values (i.e. the parameter "instrument" can have values such as "piano", "guitar", ...) and every value must have a String that represents it allowing the user to select it by voice. There are two "built-in" parameters that are available for every exercise: "Instrument" and "Speed".
 
-Inside the parameter class you can handle the values in every way. I found it useful to use a LinkedHashMap to convert the String to the value needed (i.e. String "ONE" to Int value) and a Pair to store the current value (i.e. as a pair of String and Int value).
+Inside the parameter class you can handle the values anyway you like it. I found it useful to use a LinkedHashMap to convert the String to the value needed (i.e. String "ONE" to Int value) and a Pair to store the current value (i.e. as a pair of String and Int value).
 
 A parameter value can be saved to permanent storage (with SharedPreferences). This is automatically done. To retrieve the stored value, the parameter class must have a constructor that takes a reference to the Exercise owner and call the method owner.getStoredValueForParameter(this) passing itself as argument. 
 
