@@ -1,5 +1,7 @@
-## EarCoach
+# EarCoach
 Voice based ear-training app for Android
+
+## About 
 
 **EarCoach** is an ear-training app that can be used without the need to touch the screen: it works just with voice commands. With your voice you can choose between different exercises, answer to the questions and even edit some settings. The app has a hierarchical structure that you can navigate with your commands. Basically you can select an exercise (i.e. "intervals") and then you can start the exercise or set some parameters (i.e. "speed","instrument",...). At every point you can say "info" to have informations about your position and what can you do or where you can move.
 
@@ -32,7 +34,7 @@ To interact with the user the exercise can call the methods speak() and play(). 
 ```
 is a sequence of a single note (60), followed by a pause, followed by a chord composed of two notes (50,55).
 
-# Parameters
+## Parameters
 
 Every exercise can have multiple parameters. Every parameter is represented by a new Class that must implement the ExerciseParameter interface. Every parameter can have multiple values (i.e. the parameter "instrument" can have values such as "piano", "guitar", ...) and every value must have a String that represents it allowing the user to select it by voice. There are two "built-in" parameters that are available for every exercise: "Instrument" and "Speed".
 
@@ -140,6 +142,6 @@ Every accepted word is taken by the string.xml file, so the app can be localizab
 - Create a constant into Words
 - Instantiate the variable with the value taken from string.xml with context.getString().
 - From the code call Words.NEW_STRING
-
-
 This obj can be used also to retrieve the string at runtime using the static method get() with the reference (R.string.DESIDERED_STRING) as parameter.
+
+It is also possible to add several alternatives for a given keyword putting a new entry within the initAlternatives method, indicating the alternative string and the keyword it belongs. 
