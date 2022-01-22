@@ -138,7 +138,7 @@ class Parameter implements ExerciseParameter{
 }
 ```
 
-After the class has been created, a new value for the enum ExerciseType must be added. It must contain the class name with reference to the package (a String) and the name you want the exercise to be called (a String).
+After the class has been created, a new value for the enum ExerciseType must be added. It must contain the class name with reference to the package and the name you want the exercise to be called.
 
 ```java
 public enum ExerciseType {
