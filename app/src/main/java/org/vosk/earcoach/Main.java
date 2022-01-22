@@ -19,6 +19,7 @@ import android.app.Activity;
 import android.content.SharedPreferences;
 import android.content.pm.PackageManager;
 import android.os.Bundle;
+import android.util.Log;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
@@ -61,6 +62,17 @@ public class Main extends Activity {
             teacher.onPause();
             finishAndRemoveTask();
         });
+        setText("");
+    }
+
+    private void startTeacher(){
+        teacher = new Teacher(this);
+        teacher.start();
+    }
+
+    @Override
+    public void onResume() {
+        super.onResume();
         LibVosk.setLogLevel(LogLevel.INFO);
         sharedPreferences = getSharedPreferences(EarCoach.EAR_COACH,MODE_PRIVATE);
         editor = sharedPreferences.edit();
@@ -71,12 +83,6 @@ public class Main extends Activity {
         } else {
             startTeacher();
         }
-        setText("");
-    }
-
-    private void startTeacher(){
-        teacher = new Teacher(this);
-        teacher.start();
     }
 
     @Override
@@ -96,12 +102,6 @@ public class Main extends Activity {
     public void onPause() {
         super.onPause();
         teacher.onPause();
-    }
-
-    @Override
-    public void onDestroy() {
-        teacher.onDestroy();
-        super.onDestroy();
     }
 
     public void isPlaying(){

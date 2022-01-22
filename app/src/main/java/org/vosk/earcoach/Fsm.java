@@ -109,12 +109,14 @@ public enum Fsm {
                 if(teacher.hasAskedQuestion()){
                     teacher.speak(Words.YOU_CAN_CHOOSE);
                     teacher.speak(Words.REPEAT);
+                    teacher.speak(Words.OR + " " + Words.YOU_CAN_CHOOSE);
+                    teacher.speak(Words.NEW);
                 }else{
                     teacher.speak(Words.YOU_CAN_CHOOSE);
                     teacher.speak(Words.NEW);
                     teacher.speak(Words.TO_START);
+                    teacher.speak(Words.OR + " " + Words.YOU_CAN_CHOOSE);
                 }
-                teacher.speak(Words.OR + " " + Words.YOU_CAN_CHOOSE);
                 teacher.speak(Words.END_EXERCISE);
                 teacher.speak(Words.SETTINGS);
                 teacher.speak(Words.TUTORIAL);

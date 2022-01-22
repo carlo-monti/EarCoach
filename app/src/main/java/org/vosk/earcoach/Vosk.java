@@ -119,9 +119,10 @@ public class Vosk implements RecognitionListener {
             speechService.setPause(checked);
         }
         isListening = !checked;
+        Log.i("VOSKa","PAUSE " + String.valueOf(checked));
     }
 
-    public void onDestroy(){
+    public void quitVosk(){
         if (speechService != null) {
             speechService.stop();
             speechService.shutdown();

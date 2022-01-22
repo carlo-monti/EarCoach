@@ -261,9 +261,6 @@ public class Teacher extends Thread implements VoskListener, SpeechListener, Syn
         speech.stop();
         synth.stopWhatIsCurrentlyPlaying();
         synth.stopSynth();
-    }
-
-    public void onDestroy(){
-        vosk.onDestroy();
+        vosk.quitVosk();
     }
 }
