@@ -47,7 +47,8 @@ public class Vosk implements RecognitionListener {
     public void onResult(String hypothesis) {
         if(isListening){
             hypothesis = hypothesis.substring(14,hypothesis.length()-3).toLowerCase();
-            Log.i("VOSKa","-----------------------------> " + hypothesis);
+            // uncomment to print the recognized word to the console
+            // Log.i("VOSKa","---> " + hypothesis);
             if(acceptedKeywords.contains(hypothesis)){
                 voskListener.onResultFromVosk(hypothesis);
                 return;
@@ -119,7 +120,6 @@ public class Vosk implements RecognitionListener {
             speechService.setPause(checked);
         }
         isListening = !checked;
-        Log.i("VOSKa","PAUSE " + String.valueOf(checked));
     }
 
     public void quitVosk(){

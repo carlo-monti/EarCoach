@@ -1,7 +1,6 @@
 package org.vosk.earcoach;
 
 import android.content.Context;
-import android.util.Log;
 import android.util.Pair;
 
 import java.lang.reflect.Constructor;
