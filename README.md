@@ -44,7 +44,7 @@ Every exercise can have multiple parameters. Every parameter is represented by a
 
 Inside the parameter class you can handle the values anyway you like it. I found it useful to use a LinkedHashMap to convert the String to the value needed (i.e. String "ONE" to Int value) and a Pair to store the current value (i.e. as a pair of String and Int value).
 
-A parameter value can be saved to permanent storage (with SharedPreferences). This is automatically done. To retrieve the stored value, the parameter class must have a constructor that takes a reference to the Exercise owner and call the method owner.getStoredValueForParameter(this) passing itself as argument.
+A parameter value can be saved to permanent storage (with SharedPreferences). This is automatically done within the Exercise abstract class. To retrieve the stored value, the parameter class must have a constructor that takes a reference to the Exercise owner and call the method owner.getStoredValueForParameter(this) passing itself as argument.
 
 A parameter Class must be added to the exercise class with the method addParameter().
 
@@ -57,7 +57,7 @@ public class NewExercise extends Exercise{
 
     public Interval(Teacher teacher){
         super(teacher);
-        addParameter(parameter1);
+        addParameter(parameter);
     }
 
     @Override
@@ -120,7 +120,7 @@ class Parameter implements ExerciseParameter{
 
     @Override
     public void setValue(String value) {
-		currentValue = value;
+	currentValue = value;
     }
 
     @Override
