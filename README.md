@@ -17,7 +17,7 @@ The app code is structured as follows:
 - **Synth**: handles the musical part of the job. It uses the [MidiDriver library](https://github.com/billthefarmer/mididriver) that simply send MIDI commands to the android internal general midi synth.
 - **Vosk**: handles the speech-to-text job. It uses the [Vosk library](https://alphacephei.com/vosk/) and it has been modified to accept only some words that are set with the *setAcceptedKeywords* method.
 
-The app is doing only one of these three actions at the same moment (i.e. they act sequentially). To handle this, each action is executed on a new thread. Whenever one action is called, it takes a lock and the current thread is forced to wait on the same lock. In this way the code can be written sequentially 
+The app is doing only one of these three actions at the same moment (i.e. they act sequentially). To handle this, each action is executed on a new thread. Whenever one action is called, it takes a lock and the current thread is forced to wait on the same lock. In this way the code can be written sequentially: 
 ```java
 speak(); 
 play(); 
