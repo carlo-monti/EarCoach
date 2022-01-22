@@ -221,7 +221,6 @@ public class Words {
     }
 
     static void initAlternatives(){
-        Log.i("VOSKa", Locale.getDefault().getCountry());
         alternatives = new HashMap<>();
         alternatives.put("nonna minore",MINOR_NINTH);
         alternatives.put("non a minore",MINOR_NINTH);

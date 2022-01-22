@@ -53,6 +53,7 @@ public class Teacher extends Thread implements VoskListener, SpeechListener, Syn
         if(startedExercise.equals(EarCoach.NONE)){
             currentState = Fsm.HOME;
             firstKeyword = Words.HOME;
+            setPreferences(EarCoach.IS_A_RESTART,false);
         }else{
             currentState = Fsm.HOME;
             firstKeyword = startedExercise;
