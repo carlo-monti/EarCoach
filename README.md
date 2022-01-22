@@ -21,7 +21,7 @@ The app is doing only one of these three actions at the same moment (i.e. they a
 
 The app is implemented as a fsm with four states: HOME, EXERCISE, SETTINGS, PARAMETER and the states are represented with the Fsm enum. At every cycle the Teacher evaluates the keyword that has been received as input using the method updateFSM(). This method calls the execute() method on the current state of the fsm and it receives the new state and a list of available keywords. After that the app start listening for the given keywords and so on...
 
-## Create a new exercise
+### Create a new exercise
 The app is built in such a way that it can be extended with new exercises by simply adding a new class that extends the Exercise abstract class. Every exercise works by asking a question and checking an answer. The new class must override some methods:
 
 - **getNewQuestion**: creates a new question inside the exercise
@@ -38,7 +38,7 @@ To interact with the user the exercise can call the methods speak() and play(). 
 ```
 is a sequence of a single note (60), followed by a pause, followed by a chord composed of two notes (50,55).
 
-## Parameters
+### Parameters
 
 Every exercise can have multiple parameters. Every parameter is represented by a new Class that must implement the ExerciseParameter interface. Every parameter can have multiple values (i.e. the parameter "instrument" can have values such as "piano", "guitar", ...) and every value must have a String that represents it allowing the user to select it by voice. There are two "built-in" parameters that are available for every exercise: "Instrument" and "Speed".
 
@@ -140,7 +140,7 @@ public enum ExerciseType {
 }
 ```
 
-## Locale
+### Locale
 Every accepted word is taken by the string.xml file, so the app can be localizable with ease. To make the access faster, every string is converted to a static string variable within the Words object with a method (generateStaticVariablesFromResources) that is called at runtime every time the app is launched. To insert a new string:
 - Insert the string into string.xml
 - Create a constant into Words
