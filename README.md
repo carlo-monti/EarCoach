@@ -27,10 +27,10 @@ listen();
 ```
 having the following instruction waiting on the lock for the completion of the previous. Teacher implements three listener interfaces, one for every action and whenever an action is completed, a callback function is executed freeing the lock.
 
-The app is implemented as a fsm with four states: HOME, EXERCISE, SETTINGS, PARAMETER and the states are represented with the Fsm enum. At every cycle the Teacher evaluates the keyword that has been received as input using the method *updateFSM*. This method calls the *execute* method on the current state of the fsm and it receives the new state and a list of available keywords. After that the app start listening for the given keywords and so on...
+The app is implemented as a Finite State Machine with four states: HOME, EXERCISE, SETTINGS, PARAMETER and the states are represented with the Fsm enum. At every cycle the Teacher evaluates the keyword that has been received as input using the method *updateFSM*. This method calls the *execute* method on the current state of the fsm and it receives the new state and a list of available keywords. After that, the app start listening for the given keywords and so on...
 
 ### Create a new exercise
-The app is built in such a way that it can be extended with new exercises by simply adding a new class that extends the Exercise abstract class. Every exercise works by asking a question and checking an answer. The new class must override some methods:
+The app is built in such a way that it can be extended with new exercises by simply adding a new class that extends the *Exercise* abstract class. Every exercise works by asking a question and checking an answer. The new class must override some methods:
 
 - **getNewQuestion**: creates a new question inside the exercise
 - **askCurrentQuestion**: ask the question to the user speaking and playing something
