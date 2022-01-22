@@ -1,14 +1,14 @@
 # EarCoach
 Voice based ear-training app for Android
 
-## About 
+## About
 
 **EarCoach** is an ear-training app that can be used without the need to touch the screen: it works just with voice commands. With your voice you can choose between different exercises, answer to the questions and even edit some settings. The app has a hierarchical structure that you can navigate with your commands. Basically you can select an exercise (i.e. "intervals") and then you can start the exercise or set some parameters (i.e. "speed","instrument",...). At every point you can say "info" to have informations about your position and what can you do or where you can move.
 
 ## Documentation
 The app code is structured as follows:
-- **Main**: is the only activity and its work is just to update the graphical UI. It creates a new Teacher object that handles all the job.
-- **Teacher**: is the real "main" class and it uses three objects to interact with the user speaking, playing and listening (Speech, Synth, Vosk). 
+- **Main**: is the only activity and its work is mainly to update the graphical UI. It creates a new Teacher object that handles all the job.
+- **Teacher**: is the real "main" class and it uses three objects to interact with the user speaking, playing and listening (Speech, Synth, Vosk).
 - **Speech**: handles the text-to-speech job by using TextToSpeech library and to play an earcon (a simple sound to indicate that the speech has ended and that the listening is starting). It has few self-explanatory methods (speak,stop,playEarcon).
 - **Synth**: handles the musical playing part of the job. It uses the MidiDriver library that simply send MIDI commands to the android internal general midi synth.
 - **Vosk**: handles the speech-to-text job. It uses the Vosk library and it has been modified to accept only some words that are set with the setAcceptedKeywords() method.
@@ -40,7 +40,7 @@ Every exercise can have multiple parameters. Every parameter is represented by a
 
 Inside the parameter class you can handle the values anyway you like it. I found it useful to use a LinkedHashMap to convert the String to the value needed (i.e. String "ONE" to Int value) and a Pair to store the current value (i.e. as a pair of String and Int value).
 
-A parameter value can be saved to permanent storage (with SharedPreferences). This is automatically done. To retrieve the stored value, the parameter class must have a constructor that takes a reference to the Exercise owner and call the method owner.getStoredValueForParameter(this) passing itself as argument. 
+A parameter value can be saved to permanent storage (with SharedPreferences). This is automatically done. To retrieve the stored value, the parameter class must have a constructor that takes a reference to the Exercise owner and call the method owner.getStoredValueForParameter(this) passing itself as argument.
 
 A parameter Class must be added to the exercise class with the method addParameter().
 
@@ -116,7 +116,7 @@ class Parameter implements ExerciseParameter{
 
     @Override
     public void setValue(String value) {
-		currentValue = value
+		currentValue = value;
     }
 
     @Override
@@ -142,6 +142,6 @@ Every accepted word is taken by the string.xml file, so the app can be localizab
 - Create a constant into Words
 - Instantiate the variable with the value taken from string.xml with context.getString().
 - From the code call Words.NEW_STRING
-This obj can be used also to retrieve the string at runtime using the static method get() with the reference (R.string.DESIDERED_STRING) as parameter.
+  This obj can be used also to retrieve the string at runtime using the static method get() with the reference (R.string.DESIDERED_STRING) as parameter.
 
 It is also possible to add several alternatives for a given keyword putting a new entry within the initAlternatives method, indicating the alternative string and the keyword it belongs. 
