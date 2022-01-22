@@ -141,11 +141,15 @@ public enum ExerciseType {
 ```
 
 ### Locale
-Every accepted word is taken by the string.xml file, so the app can be localizable with ease. To make the access faster, every string is converted to a static string variable within the Words object with a method (generateStaticVariablesFromResources) that is called at runtime every time the app is launched. To insert a new string:
+Every accepted word is taken by the string.xml file, so the app can be localizable with ease. To make the access faster, every string is converted to a static string variable within the Words object with the static method generateStaticVariablesFromResource() that is called at runtime every time the app is launched. To insert a new string:
 - Insert the string into string.xml
 - Create a constant into Words
 - Instantiate the variable with the value taken from string.xml with context.getString().
-- From the code call Words.NEW_STRING
-  This obj can be used also to retrieve the string at runtime using the static method get() with the reference (R.string.DESIDERED_STRING) as parameter.
+- To use it just call Words.NEW_STRING
 
-It is also possible to add several alternatives for a given keyword putting a new entry within the initAlternatives method, indicating the alternative string and the keyword it belongs. 
+This obj can also be used to retrieve the string at runtime using the static method get() with the reference (R.string.DESIDERED_STRING) as parameter.
+
+It is also possible to add several alternatives for a given keyword by putting a new entry within the initAlternatives method, indicating the alternative string and the keyword it belongs. This is useful to handle misrecognitions in the speech-to-text action.
+
+## To do
+Currently the app has to keep the screen on to avoid shutting down the internal synth. This has the disadvantage of battery consumption. The app should be modified easily to work in background by using Wake locks. The problem is that there is no documentation about how to use the internal synth and how avoid its shutdown!
