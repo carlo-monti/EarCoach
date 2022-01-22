@@ -5,6 +5,10 @@ Voice based ear-training app for Android
 
 **EarCoach** is an ear-training app that can be used without the need to touch the screen: it works just with voice commands. With your voice you can choose between different exercises, answer to the questions and even edit some settings. The app has a basical hierarchical structure (HOME->EXERCISE->PARAMETER) that you can navigate with your commands. You start at "home", than you can select an exercise (i.e. "intervals") and then you can start the exercise or set some parameters (i.e. "speed","instrument",...). At every point you can say "info" to have informations about your position and what can you do or where you can move.
 
+## Install
+
+Download the folder, open it in Android Studio and start it (remember to enable the microphone in the emulator).
+
 ## Documentation
 The app code is structured as follows:
 - **Main**: is the only activity and its work is mainly to update the graphical UI. It creates a new Teacher object that handles all the job.
