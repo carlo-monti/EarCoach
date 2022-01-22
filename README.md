@@ -10,7 +10,7 @@ The app code is structured as follows:
 - **Main**: is the only activity and its work is mainly to update the graphical UI. It creates a new Teacher object that handles all the job.
 - **Teacher**: is the real "main" class and it uses three objects to interact with the user speaking, playing and listening (Speech, Synth, Vosk).
 - **Speech**: handles the text-to-speech job by using TextToSpeech library and to play an earcon (a simple sound to indicate that the speech has ended and that the listening is starting). It has few self-explanatory methods (speak,stop,playEarcon).
-- **Synth**: handles the musical part of the job. It uses the MidiDriver library that simply send MIDI commands to the android internal general midi synth.
+- **Synth**: handles the musical part of the job. It uses the MidiDriver library (https://github.com/billthefarmer/mididriver) that simply send MIDI commands to the android internal general midi synth.
 - **Vosk**: handles the speech-to-text job. It uses the Vosk library (https://alphacephei.com/vosk/) and it has been modified to accept only some words that are set with the setAcceptedKeywords() method.
 
 Given that the app is doing only one of these three actions at the same moment, every action is executed on a new thread. Whenever one action is called, it takes a lock and the current thread is forced to wait on the same lock. In this way the code can be written sequentially (i.e. speak(); play(); speak(); listen(); ...) having the following instruction waiting on the lock for the completion of the previous. Teacher implements three listener interfaces, one for every action and whenever an action is completed, a callback function is executed leaving the lock.
