@@ -34,6 +34,7 @@ public class Teacher extends Thread implements VoskListener, SpeechListener, Syn
     private Fsm currentState;
     private Exercise currentExercise;
     private Thread fsmThread;
+    private boolean isActive;
 
     public Teacher(Main main){
         this.main = main;
@@ -58,6 +59,7 @@ public class Teacher extends Thread implements VoskListener, SpeechListener, Syn
             currentState = Fsm.HOME;
             firstKeyword = startedExercise;
         }
+        setPauseOff();
     }
 
     @Override
@@ -87,29 +89,37 @@ public class Teacher extends Thread implements VoskListener, SpeechListener, Syn
     private void listen(HashSet<String> keywords){
         // Start the voice recognition bounded to a list of possible keywords
         lock.getLock();
-        main.runOnUiThread(main::isListening);
-        vosk.setAcceptedKeywords(keywords);
-        vosk.pause(false);
+        if(isActive){
+            main.runOnUiThread(main::isListening);
+            vosk.setAcceptedKeywords(keywords);
+            vosk.pause(false);
+        }
     }
 
     public void play(int[][] chordSequence,int duration){
         // Play the chord sequence at a certain speed
         lock.getLock();
-        main.runOnUiThread(main::isPlaying);
-        synth.play(chordSequence,duration);
+        if(isActive){
+            main.runOnUiThread(main::isPlaying);
+            synth.play(chordSequence,duration);
+        }
     }
 
     public void speak(String string){
         // Convert the string to speech
         lock.getLock();
-        main.runOnUiThread(main::isSpeaking);
-        speech.speak(string);
+        if(isActive){
+            main.runOnUiThread(main::isSpeaking);
+            speech.speak(string);
+        }
     }
 
     public void playEarcon(){
         // Plays a recognizable sound to identify the starting of listening
         lock.getLock();
-        speech.playEarcon();
+        if(isActive){
+            speech.playEarcon();
+        }
     }
 
 // Methods for speach, synth and vosk listeners/callbacks
@@ -253,6 +263,7 @@ public class Teacher extends Thread implements VoskListener, SpeechListener, Syn
     }
 
     public void onPause(){
+        isActive = false;
         if(fsmThread != null){
             fsmThread.interrupt();
         }
@@ -262,5 +273,9 @@ public class Teacher extends Thread implements VoskListener, SpeechListener, Syn
         synth.stopWhatIsCurrentlyPlaying();
         synth.stopSynth();
         vosk.quitVosk();
+    }
+
+    public void setPauseOff(){
+        isActive = true;
     }
 }
