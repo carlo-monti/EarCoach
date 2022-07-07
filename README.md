@@ -160,4 +160,4 @@ This obj can also be used to retrieve the string at runtime using the static met
 It is also possible to add several alternatives for a given keyword by putting a new entry within the *initAlternatives* method, indicating the alternative string and the keyword it belongs. This is useful to handle misrecognitions in the speech-to-text action.
 
 ## To do
-Currently the app has to keep the screen on to avoid shutting down the internal synth. This has the disadvantage of battery consumption. The app should be modified easily to work in background by using Wake locks. The problem is that there is no documentation about how to use the internal synth and how avoid its shutdown!
+Currently the app has to keep the screen on to avoid shutting down the internal synth. This has the disadvantage of battery consumption. The app should be modified easily to work in background by using Wake locks. The problem is that I didn't find any documentation about how to use the internal synth and how avoid its shutdown!
